@@ -1,1 +1,15 @@
-
+class Solution {
+public:
+    bool winnerOfGame(string colors) {
+        int n = colors.length();
+        int Alice =0;
+        int bob  =0;
+        for(int i=1;i<n-1;i++){   // TC->O(n) , SC->O(1)
+            if(colors[i-1]==colors[i] && colors[i]==colors[i+1]){
+                if(colors[i]=='A') Alice++;
+                else bob++;
+            }
+        }
+        return Alice>bob;
+    }
+};
