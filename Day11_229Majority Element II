@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<int> majorityElement(vector<int>& nums) {  // Tc->O(N) ,Sc->O(1);
+    vector<int> majorityElement(vector<int>& nums) {  // Tc->O(N) ,Sc->O(1);  // Boyer-Moore Voting algorithm
          int n = nums.size();
         int count1=0;
         int count2=0;
