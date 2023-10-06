@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int majorityElement(vector<int>& nums) {
+    int majorityElement(vector<int>& nums) {    // // Boyer-Moore Voting algorithm
         int n = nums.size();                   // Tc -> O(N), Sc -> O(1).
         int count=0;
         int maj=NULL;
