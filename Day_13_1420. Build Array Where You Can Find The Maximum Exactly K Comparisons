@@ -1,0 +1,30 @@
+class Solution {
+public:       // https://www.youtube.com/watch?v=YU9IGG5PB2Y
+    int M,N,K;
+    int MOD= 1e9+7;
+    int t[51][51][101];
+    int solve(int idx , int search_Cost , int maxsoFar){
+        if(idx==N){
+            if(search_Cost==K)return 1;
+            return 0;
+        }
+        if(t[idx][search_Cost][maxsoFar]!=-1)
+        return t[idx][search_Cost][maxsoFar];
+        int result=0;
+        for(int i=1;i<=M;i++){
+            if(i>maxsoFar){
+               result=(result+solve(idx+1,search_Cost+1,i))%MOD;          //Approach-1 (Using Recursion + Memoization)
+                                                                         //T.C : O(m*n*k)
+            }
+            else result=(result+solve(idx+1,search_Cost,maxsoFar))%MOD;
+        }
+        return t[idx][search_Cost][maxsoFar]=result%MOD;
+    }
+    int numOfArrays(int n, int m, int k) {
+        N=n;
+        M=m;
+        K=k;
+        memset(t,-1,sizeof(t));
+        return solve(0,0,0);
+    }
+};
