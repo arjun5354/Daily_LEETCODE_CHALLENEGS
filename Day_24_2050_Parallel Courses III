@@ -1,10 +1,8 @@
 /*
-    MY YOUTUBE VIDEO ON THIS Qn : https://www.youtube.com/watch?v=743cYtf3DJI
+    YOUTUBE VIDEO ON THIS Qn : https://www.youtube.com/watch?v=743cYtf3DJI
     Company Tags                : Uber
     Leetcode Link               : https://leetcode.com/problems/parallel-courses-iii/
 */
-
-/****************************************************** C++ ******************************************************/
 //Approach-1 (Using Simple Topological sorting)
 //T.C : O(V+E)
 class Solution {
