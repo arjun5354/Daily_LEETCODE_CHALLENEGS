@@ -1,0 +1,24 @@
+// Approach-1
+class Solution {
+public:
+   string FindActualAns(string s){
+       stack<char>st;
+       for(int i=0;i<s.length();i++){           // TC->O(n),SC->O(n)
+           if(s[i]=='#'){
+               if(st.empty())continue;
+               else st.pop();
+           }
+           else st.push(s[i]);
+       }
+       string ans="";
+       while(!st.empty()){
+           ans+=st.top();st.pop();
+       }
+       return ans;
+   }
+    bool backspaceCompare(string s, string t) {
+     string s1=FindActualAns(s);
+     string s2=FindActualAns(t);
+     return s1==s2;
+    }
+};
