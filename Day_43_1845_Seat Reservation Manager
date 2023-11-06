@@ -73,9 +73,9 @@ public:
             return seat;
         }
         
-        int seat = marker;
-        marker++;
-        return seat;
+        int seat = seat_marker;
+        seat_marker++;
+        return seat_marker;
     }
     
     void unreserve(int seatNumber) {
