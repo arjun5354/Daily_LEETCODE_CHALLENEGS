@@ -40,7 +40,7 @@ public:
         int vert_dist = abs(sy-fy);
         int hor_dist  = abs(sx-fx);
         
-        if(vert_dist == 0 && hor_dist == 0 && t == 1) {
+        if(vert_dist == 0 && hor_dist == 0 && t == 1) {  // This is a important corner case.
             return false;
         }
         
