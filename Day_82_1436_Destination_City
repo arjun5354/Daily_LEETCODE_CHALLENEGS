@@ -30,7 +30,7 @@ public:
     }
 };
 
-//Approach-1 (Using HashSet) - Count Outdegrees
+//Approach-2 (Using HashSet) - Count Outdegrees
 //T.C : O(n)
 //S.C : O(n)
 class Solution {
