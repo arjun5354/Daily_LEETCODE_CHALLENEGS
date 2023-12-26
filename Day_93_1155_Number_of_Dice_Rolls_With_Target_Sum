@@ -1,0 +1,70 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn : https://www.youtube.com/watch?v=nQw9gVaIjGo
+    Company Tags                : Amazon, Microsoft, Apple, Google
+    Leetcode Link               : https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/
+    GfG Link (Dice Throw)       : https://practice.geeksforgeeks.org/problems/dice-throw5349/1
+*/
+
+/************************************************************ C++ ******************************************************************/
+//Approach-1 (Recur + Memo) - It's Just Like coin change-2 (Only in this qn, assume that coin has k faces having different values)
+//T.C : O(n*target*k) (But without memoization - it will be O(k^n)
+//S.C : O(31*1001) ~= O(1)
+
+//Approach-2 (Bottom Up) - It's Just Like coin change-2 (Only in this qn, assume that coin has k faces having different values)
+//T.C : O(n*target*k)
+//S.C : O(n*target)
+
+class Solution {
+public:
+    int MOD=1e9+7;
+    int solveUsingRe(int n,int k,int target){
+        if(n==0  && target==0) return 1;
+        if(n==0 && target!=0) return 0;
+        if(n!=0 && target==0) return 0;
+        if(n<0 && target<0) return 0;
+ 
+      int ans=0;
+      for(int i=1;i<=k;i++){
+          ans+=solveUsingRe(n-1,k,target-i);
+      }
+      return ans;
+    }
+    int solveUsingMem(int n,int k,int target,vector<vector<int>>&dp){
+        if(n==0  && target==0) return 1;
+        if(n==0 && target!=0) return 0;
+        if(n!=0 && target==0) return 0;
+        if(target<0) return 0;
+        if(n<0) return 0;
+        if(dp[n][target]!=-1) return dp[n][target];
+       int ans=0;
+      for(int i=1;i<=k;i++){
+          ans=(ans+solveUsingMem(n-1,k,target-i,dp))%MOD;
+      }
+      dp[n][target]= ans;
+      return dp[n][target];
+    }
+    int tabulation(int n,int k,int target){
+         vector<vector<int>>dp(n+1,vector<int>(target+1,0));
+         dp[0][0]=1;
+         for(int en=1;en<=n;en++){
+             for(int tar=1;tar<=target;tar++){
+           
+         int ans=0;
+      for(int i=1;i<=k;i++){
+          if(tar-i>=0)
+          ans=(ans+dp[en-1][tar-i])%MOD;
+      }
+      dp[en][tar]= ans;
+             
+
+             }
+         }
+      return dp[n][target];
+    }
+    int numRollsToTarget(int n, int k, int target) {
+    //   return solveUsingRe(n,k,target);
+    vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
+    //   return solveUsingMem(n,k,target,dp);
+      return tabulation(n,k,target);
+     }
+};
