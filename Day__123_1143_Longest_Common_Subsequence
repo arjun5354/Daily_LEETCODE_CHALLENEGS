@@ -1,0 +1,70 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn : https://www.youtube.com/watch?v=aJNu_DLyOxY
+    Company Tags                : Microsoft, Amazon, FactSet, Hike, Citrix, MakeMyTrip, Paytm, VMWare
+    Leetcode Link               : https://leetcode.com/problems/longest-common-subsequence/
+    GfG Link                    : https://practice.geeksforgeeks.org/problems/longest-common-subsequence-1587115620/1
+*/
+
+//Approach-1 (Recursion + Memoization)
+class Solution {
+public:
+    int solveUsingRe(string&s1,string&s2,int i,int j){
+        if(i==s1.length()||j==s2.length()) return 0;
+
+        if(s1[i]==s2[j]) return 1+solveUsingRe(s1,s2,i+1,j+1);
+
+        int increasing_ith_idx = solveUsingRe(s1,s2,i+1,j); 
+        int increasing_jth_idx = solveUsingRe(s1,s2,i,j+1);
+        return max(increasing_ith_idx,increasing_jth_idx); 
+    }
+    int solveUsingMem(string&s1,string&s2,int i,int j,vector<vector<int>>&dp){
+        if(i==s1.length()||j==s2.length()) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(s1[i]==s2[j]) return 1+solveUsingMem(s1,s2,i+1,j+1,dp);
+
+        int increasing_ith_idx = solveUsingMem(s1,s2,i+1,j,dp); 
+        int increasing_jth_idx = solveUsingMem(s1,s2,i,j+1,dp);
+        return dp[i][j]=max(increasing_ith_idx,increasing_jth_idx); 
+    }
+    int tabulation(string&s1,string&s2){
+        vector<vector<int>>dp(s1.size()+1,vector<int>(s2.size()+1,0));
+        for(int i=s1.size()-1;i>=0;i--){
+            for(int j=s2.size()-1;j>=0;j--){
+                int ans=0;
+           if(s1[i]==s2[j]) ans= 1+dp[i+1][j+1];
+          else{
+        int increasing_ith_idx = dp[i+1][j]; 
+        int increasing_jth_idx = dp[i][j+1];
+         ans=max(increasing_ith_idx,increasing_jth_idx); 
+          }
+            dp[i][j]=ans;
+            }
+        }
+        return dp[0][0];
+    }
+    int spaceOpti(string&s1,string&s2){
+        vector<int>curr(s2.size()+1,0);
+        vector<int>next(s2.size()+1,0);
+        for(int i=s1.size()-1;i>=0;i--){
+            for(int j=s2.size()-1;j>=0;j--){
+                int ans=0;
+           if(s1[i]==s2[j]) ans= 1+next[j+1];
+          else{
+        int increasing_ith_idx = next[j]; 
+        int increasing_jth_idx = curr[j+1];
+         ans=max(increasing_ith_idx,increasing_jth_idx); 
+          }
+            curr[j]=ans;
+            }
+            next=curr;
+        }
+        return next[0];
+    }
+    int longestCommonSubsequence(string text1, string text2) {
+        // return solveUsingRe(text1,text2,0,0);
+        vector<vector<int>>dp(text1.size()+1,vector<int>(text2.size()+1,-1));
+        // return solveUsingMem(text1,text2,0,0,dp);
+        // return tabulation(text1,text2);
+        return spaceOpti(text1,text2);
+    }
+};
