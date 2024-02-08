@@ -1,0 +1,64 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn : Recursion + Memo - https://www.youtube.com/watch?v=Zbn8in7hpXY
+                                  Bottom Up        - https://youtu.be/7zfmLa6vzaA?si=kMR0gkIw43-Tbn9m
+    Company Tags                : Google, Salesforce, Microsoft, Meta, Amazon
+    Frequency                   : 74%
+    Leetcode Link               : https://leetcode.com/problems/perfect-squares/
+    This question is nothing but just similar to of "Minimum Coins to get sum S (COIN CHANGE - Leetcode : 322)
+*/
+
+
+/********************************************************************* C++ *********************************************************************/
+//Approach-1 (Recusrion + Memoization) - Using concept of "Minimum Coins" concept
+//T.C : O(n*S) - Where n = total coins possible and S = target sum
+//S.C : O(n*S)
+class Solution {
+public:
+    int  solveUsingre(int n,vector<int>&dp){
+        if(n==0) return 0;
+        if(dp[n]!=-1) return dp[n];
+        int start=1;
+        int end=sqrt(n);
+          int sum=INT_MAX;
+        while(start<=end){
+            int square=start*start;
+            int totalSum=1+solveUsingre(n-square,dp);
+            sum=min(sum,totalSum);
+             start++;
+        }
+        return dp[n]=sum;
+    }
+ int numSquares(int n) {
+        vector<int>dp(n+1,-1);
+        return solveUsingre(n,dp);
+    }
+};
+
+
+//Approach-2 (Bottom Up DP) - Using concept of "Minimum Coins" concept
+//T.C : O(n*S) - Where n = total coins possible and S = target sum
+//S.C : O(n*S)
+class Solution {
+public:
+ int  tabulation(int n){
+        vector<int>dp(n+1,0);
+        for(int i=1;i<=n;i++){
+             int start=1;
+        int end=sqrt(i);
+          int sum=INT_MAX;
+        while(start<=end){
+            int square=start*start;
+            int totalSum=1+dp[i-square];
+            sum=min(sum,totalSum);
+             start++;
+        }
+         dp[i]=sum;
+        }
+        return dp[n];
+    }
+    int numSquares(int n) {
+        vector<int>dp(n+1,-1);
+        // return solveUsingre(n,dp);
+        return tabulation(n);
+    }
+};
