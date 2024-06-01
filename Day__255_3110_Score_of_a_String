@@ -1,0 +1,21 @@
+/*
+      YOUTUBE VIDEO ON THIS Qn    : 
+      Company Tags                : 
+      Leetcode Link               : https://leetcode.com/problems/score-of-a-string/?envType=daily-question&envId=2024-06-01
+*/
+
+/***************************************************************** C++ ******************************************************************************/
+//Approach-1 (using simple sorting and check)
+//T.C : O(n)
+//S.C : O(1) 
+class Solution {
+public:
+    int scoreOfString(string s) {
+        int asciiSum=0;
+        for(int i=1;i<s.size();i++){
+            // asciiSum+=abs((s[i]-'a'+97) - (s[i-1]-'a'+97));
+              asciiSum+=abs((s[i]-'a') - (s[i-1]-'a'));
+        }
+        return asciiSum;
+    }
+};
