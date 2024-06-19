@@ -1,0 +1,45 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=erWfh_hBF80
+    Company Tags                : Amazon
+    Leetcode Link               : https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets
+*/
+
+/*************************************************************** C++ ***************************************************************/
+//Approach - Using "Binary Search on Answer"
+//T.C : O(n * log(max_d)), n is the number of flowers and max_d is the highest value in the array bloomDay.
+//S.C : O(1)
+class Solution {
+public:
+    bool canMakeBouquets(vector<int>& bloomDay, int m, int k,int allotedDay){
+        int consequtiveCollection=0;
+        int countBouquet=0;
+        for(int i=0;i<bloomDay.size();i++){
+            if(bloomDay[i]<=allotedDay){
+                consequtiveCollection++;
+                if(consequtiveCollection==k){
+                    consequtiveCollection=0;
+                    countBouquet++;
+                }
+            }else{
+                consequtiveCollection=0;
+            }
+        }
+        return countBouquet>=m; 
+    }
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        int n=bloomDay.size();
+        int start_day=*min_element(bloomDay.begin(),bloomDay.end());
+        int end_day=*max_element(bloomDay.begin(),bloomDay.end());
+        int minNumDays=-1;
+        while(start_day<=end_day){
+            int mid=start_day+(end_day-start_day)/2;
+            if(canMakeBouquets(bloomDay,m,k,mid)){
+                minNumDays=mid;
+                end_day=mid-1;
+            }else{
+                start_day=mid+1;
+            }
+        }
+        return minNumDays;
+    }
+};
