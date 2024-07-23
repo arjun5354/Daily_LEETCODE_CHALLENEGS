@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int> frequencySort(vector<int>& nums) {
+        unordered_map<int,int>mp;
+        for(auto&val:nums){
+            mp[val]++;
+        }
+        auto comp=[&](int& val1,int& val2){
+            if(mp[val1]==mp[val2])return val1>val2;
+            return mp[val1]<mp[val2];
+        };
+        sort(nums.begin(),nums.end(),comp);
+        return nums;
+    }
+};
