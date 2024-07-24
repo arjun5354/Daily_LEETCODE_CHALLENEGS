@@ -1,0 +1,37 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=BXHWgX4UX04
+    Company Tags                : will update soon
+    Leetcode Link               : https://leetcode.com/problems/sort-the-jumbled-numbers
+*/
+
+/**************************************************** C++ ****************************************************/
+//Approach-1 (Converting to string)
+//T.C : O(n*d + nlogn) , Here, n is the size of the nums vector, and d is the average number of digits in the numbers.
+//S.C : O(n+d)
+class Solution{
+public:
+    vector<int> sortJumbled(vector<int>& mapping, vector<int>& nums) {
+    unordered_map<int, string> mp;
+    for (auto val : nums) {
+        string temp = "";
+        int curr = val;
+        
+        if (val == 0) {
+            temp = to_string(mapping[0]);
+        } else {
+            while (val) {
+                int digit = val % 10;
+                temp = to_string(mapping[digit]) + temp;
+                val /= 10;
+            }
+        }
+        mp[curr] = temp;
+    }
+    auto comp = [&](int& a, int& b) {
+        return stoi(mp[a])<stoi(mp[b]);  
+    };
+    
+    sort(nums.begin(), nums.end(), comp);
+    return nums;
+}
+};
