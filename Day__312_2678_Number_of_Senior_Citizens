@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int countSeniors(vector<string>& details) {
+        int seniorsCitizens=0;
+        for(auto&str:details){
+            int a=str[11]-'0';
+            int b=str[12]-'0';
+            int age=a*10+b;
+            if(age>60)seniorsCitizens++;
+        }
+        return seniorsCitizens;
+    }
+};
