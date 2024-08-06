@@ -1,0 +1,34 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=fX6sHghLCow
+    Company Tags                : will soon update
+    Leetcode Link               : https://leetcode.com/problems/minimum-number-of-pushes-to-type-word-ii/
+*/
+
+
+/******************************************************************** C++ ********************************************************************/
+//Approach-1 (Using Map and doing as asked in Problem)
+//T.C : O(n) + O(26log26) (for sorting)
+//S.C : O(1)
+
+class Solution {
+public:
+    int minimumPushes(string word) {
+        vector<int>freq(26,0);
+        for(auto&ch:word)freq[ch-'a']++;
+        sort(freq.rbegin(),freq.rend());
+        int noOfPush=0;
+        for(int i=0;i<8;i++){
+            noOfPush=noOfPush+freq[i];
+        }
+        for(int i=8;i<16;i++){
+            noOfPush=noOfPush+2*freq[i];
+        }
+        for(int i=16;i<24;i++){
+            noOfPush=noOfPush+3*freq[i];
+        }
+        for(int i=24;i<26;i++){
+            noOfPush=noOfPush+4*freq[i];
+        }
+        return noOfPush;
+    }
+};
