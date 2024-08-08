@@ -1,0 +1,42 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=HXdCemhtrNA
+    Company Tags                : Paytm, Zoho, Morgan Stanley, Accolite, Amazon, Microsoft, Snapdeal, D-E-Shaw, MakeMyTrip, Oracle, MAQ Software, nearbuy, Nagarro, BrowserStack
+    Frequency                   : 64%
+    Leetcode Qn Link            : https://leetcode.com/problems/spiral-matrix-ii/
+*/
+Tc:->O(n2)
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>>result(n,vector<int>(n));
+        int startRow=0;
+        int endRow=n-1;
+        int startCol=0;
+        int endCol=n-1;
+        int numToPush=1;
+        vector<int>temp;
+        while(numToPush<=(n*n)){
+            for(int i=startCol;i<=endCol;i++){
+                result[startRow][i]=(numToPush);
+                numToPush++;
+            }
+            startRow++;
+            for(int i=startRow;i<=endRow;i++){
+                result[i][endCol]=(numToPush);
+                numToPush++;
+            }
+            endCol--;
+            for(int i=endCol;i>=startCol;i--){
+                result[endRow][i]=(numToPush);
+                numToPush++;
+            }
+            endRow--;
+            for(int i=endRow;i>=startRow;i--){
+                result[i][startCol]=(numToPush);
+                numToPush++;
+            }
+            startCol++;
+        }
+        return result;
+    }
+};
