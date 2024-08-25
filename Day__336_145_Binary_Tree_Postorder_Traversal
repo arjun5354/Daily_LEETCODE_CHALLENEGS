@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int>result;
+    void solve(TreeNode*&root){
+        if(!root)return;
+        solve(root->left);
+        solve(root->right);
+        result.push_back(root->val);
+        return;
+    }
+    vector<int> postorderTraversal(TreeNode* root) {
+    solve(root);
+    return result;
+    }
+};
