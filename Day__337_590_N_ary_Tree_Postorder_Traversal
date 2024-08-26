@@ -1,0 +1,15 @@
+
+class Solution {
+public:
+    void solve(Node*&root,vector<int>&result){
+        if(!root)return;
+       for(auto&child:root->children)solve(child,result);
+        result.push_back(root->val);
+        return;
+    }
+    vector<int> postorder(Node* root) {
+        vector<int>result;
+        solve(root,result);
+        return result;
+    }
+};
