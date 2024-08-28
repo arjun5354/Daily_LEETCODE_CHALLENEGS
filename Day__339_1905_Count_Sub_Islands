@@ -1,0 +1,44 @@
+
+/*
+    Company Tags                : Good Q's
+    Leetcode Link               : https://leetcode.com/problems/count-sub-islands
+*/
+
+
+/******************************************** C++ ********************************************/
+//Approach-1 (DFS)
+//T.C : O(m*n)
+//S.C : O(1) //I am not considering the space taken by System Recursion stack
+
+class Solution {
+public:
+    int dx[4]={-1,0,1,0};
+    int dy[4]={0,1,0,-1};
+    bool flag=false;
+    int n,m;
+    void dfs(int row,int col,vector<vector<int>>& grid1, vector<vector<int>>& grid2){
+        if(row<0||row>=n||col<0||col>=m||grid2[row][col]==0)return;
+        grid2[row][col]=0;
+        if(grid1[row][col]==0)flag=0;
+        for(int i=0;i<4;i++){
+            int new_row=row+dx[i];
+            int new_col=col+dy[i];
+            dfs(new_row,new_col,grid1,grid2);
+        }
+    }
+    int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+         n=grid1.size();
+         m=grid1[0].size();
+        int count=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                flag=1;
+                if(grid2[i][j]==1){
+                    dfs(i,j,grid1,grid2);
+                    if(flag)count++;
+                }
+            }
+        }
+        return count;
+    }
+};
