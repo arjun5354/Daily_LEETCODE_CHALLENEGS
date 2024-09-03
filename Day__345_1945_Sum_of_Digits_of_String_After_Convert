@@ -1,0 +1,19 @@
+/************************************************ C++ ************************************************************/
+T.C : O(k*n)
+S.C : O(n)
+class Solution {
+public:
+    int getLucky(string s, int k) {
+        string temp;
+        for(auto&ch:s)temp+=to_string(ch-'a'+1);
+        while(k--){
+            int curr_digit_sum=0;
+            for(auto&ch:temp){
+                int digit=ch-'0';
+                curr_digit_sum+=digit;
+            }
+            temp=to_string(curr_digit_sum);
+        }
+        return stoi(temp);
+    }
+};
