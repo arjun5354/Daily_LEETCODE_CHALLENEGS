@@ -1,0 +1,23 @@
+// Company Tag : Microsoft Amazon stubHub
+class Solution {
+public:
+    vector<int> missingRolls(vector<int>& rolls, int mean, int n) {
+        int m=rolls.size();
+        vector<int>result(n);
+        int possibleSum=mean*(m+n);
+        int arraySum=accumulate(rolls.begin(),rolls.end(),0);
+        int resultSum=possibleSum-arraySum;
+        if(resultSum < n || resultSum > (6*n))return {};
+        int div=resultSum/n;
+        int rem=resultSum%n;
+        
+        for(int i=0;i<n;i++){
+            result[i]=div;
+            if(rem){
+                result[i]++;
+                rem--;
+            }
+        }
+        return result;
+    }
+};
