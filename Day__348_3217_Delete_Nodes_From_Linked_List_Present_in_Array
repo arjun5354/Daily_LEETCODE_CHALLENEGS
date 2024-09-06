@@ -1,0 +1,30 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=qb7br7auuOc
+    Company Tags                : AMAZON Google
+    Leetcode Link               : https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/
+*/
+
+/********************************************************************* C++ ************************************************************/
+//Approach (Using Simple straight forward approach)
+//T.C : O(n)
+//S.C : O(n)
+class Solution {
+public:
+    ListNode* modifiedList(vector<int>& nums, ListNode* head) {
+        unordered_set<int>st(nums.begin(),nums.end());
+        ListNode*dummy=new ListNode(-1);
+        dummy->next=head;
+        ListNode*prev=dummy;
+        ListNode*curr=head;
+        while(curr){
+            if(st.count(curr->val)){
+                prev->next=curr->next;
+                curr=curr->next;
+            }else{
+                prev=prev->next;
+                curr=curr->next;
+            }
+        }
+        return dummy->next;
+    }
+};
