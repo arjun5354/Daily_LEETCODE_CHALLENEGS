@@ -1,0 +1,49 @@
+/*     Scroll below to see JAVA code also    */
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=h-3aM0bEUZ8
+    Company Tags                : Google
+    Leetcode Link               : https://leetcode.com/problems/spiral-matrix-iv/description
+*/
+
+/************************************************ C++ ************************************************/
+//Simple SImulation
+//T.C : O(m*n)
+//S.C : O(1) (I am not considering the result matrix we have to return as result)
+class Solution {
+public:
+    vector<vector<int>> spiralMatrix(int m, int n, ListNode* head) {
+       vector<vector<int>>result(m,vector<int>(n,-1));
+       int startRows=0;
+       int endRows=m-1;
+       int startCols=0;
+       int endCols=n-1;
+       ListNode*curr=head;
+       while(curr){
+        
+        for(int i=startCols;i<=endCols && curr;i++){
+            result[startRows][i]=curr->val;
+            curr=curr->next;
+        }
+        startRows++;
+
+        for(int i=startRows;i<=endRows &&curr;i++){
+            result[i][endCols]=curr->val;
+            curr=curr->next;
+        }
+        endCols--;
+
+        for(int i=endCols;i>=startCols&&curr;i--){
+            result[endRows][i]=curr->val;
+            curr=curr->next;
+        }
+        endRows--;
+
+        for(int i=endRows;i>=startRows&&curr;i--){
+            result[i][startCols]=curr->val;
+            curr=curr->next;
+        }
+       startCols++;
+       }
+       return result;
+    }
+};
