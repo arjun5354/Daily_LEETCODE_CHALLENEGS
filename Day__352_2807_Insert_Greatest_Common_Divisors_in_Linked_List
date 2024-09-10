@@ -1,0 +1,22 @@
+/*   Scroll below to see JAVA code also    */
+/*
+    YOUTUBE VIDEO ON THIS Qn    : 
+    Company Tags                : will update soon
+    Leetcode Link               : https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list
+*/
+class Solution {
+public:
+    ListNode* insertGreatestCommonDivisors(ListNode* head) {
+        ListNode*prev=head;
+        ListNode*curr=head->next;
+        while(curr){
+            int GCD=__gcd(prev->val,curr->val);
+            ListNode*newnode=new ListNode(GCD);
+            prev->next=newnode;
+            newnode->next=curr;
+            prev=curr;
+            curr=curr->next;
+        }
+        return head;
+    }
+};
