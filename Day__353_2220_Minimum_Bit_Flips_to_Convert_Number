@@ -1,0 +1,36 @@
+Every Approach has the time complexity of O(1) and space complexity of O(1)
+
+// Appraoch-1
+class Solution {
+public:
+    int minBitFlips(int start, int goal) {
+        int XOR = start^goal;
+        int flip=0;
+        while(XOR){
+            if((XOR&1)==1)flip++;
+            XOR>>=1;
+        }
+        return flip;
+    }
+};
+// Approach-2
+class Solution {
+public:
+    int minBitFlips(int start, int goal) {
+        int flip=0;
+        while(start||goal){
+            if((start&1)!=(goal&1))flip++;
+            start>>=1;
+            goal>>=1;
+        }
+        return flip;
+    }
+};
+// Approach-3
+class Solution {
+public:
+    int minBitFlips(int start, int goal) {
+        int XOR = start^goal;
+        return __builtin_popcount(XOR);
+    }
+};
