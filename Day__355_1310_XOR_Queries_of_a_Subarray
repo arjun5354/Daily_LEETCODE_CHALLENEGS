@@ -1,0 +1,44 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=rZYdNpHXz0o
+    Company Tags                : will soon update
+    Leetcode Link               : https://leetcode.com/problems/xor-queries-of-a-subarray
+*/
+//T.C : O(n*q)
+//S.C : O(1)
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
+        int n=queries.size();
+        vector<int>result(n);
+        for(int i=0;i<n;i++){
+            int x=queries[i][0];
+            int y=queries[i][1];
+            int cXor=0;
+            for(int i=x;i<=y;i++){
+                cXor^=arr[i];
+            }
+            result[i]=cXor;
+        }
+        return result;
+    }
+};
+//T.C : O(n*q)
+//S.C : O(1)
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
+       int n=arr.size();
+       vector<int>pref_Xor(n);
+       pref_Xor[0]=arr[0];
+       for(int i=1;i<n;i++){
+          pref_Xor[i]=pref_Xor[i-1]^arr[i];
+       }
+       vector<int>result;
+       for(auto&vec:queries){
+        int left=vec[0];
+        int right=vec[1];
+        result.push_back((left==0?0:pref_Xor[left-1])^pref_Xor[right]); // [a1,a2,a3,a4] --> [a1,a1^a2,a1^a2^a3,a1^a2^a3^a4]
+       }
+       return result;
+    }
+};
