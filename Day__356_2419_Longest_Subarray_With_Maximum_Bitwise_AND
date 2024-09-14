@@ -1,0 +1,53 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=xhKpOhtqAnM
+    Company Tags                : Will update soon
+    Leetcode Link               : https://leetcode.com/problems/longest-subarray-with-maximum-bitwise-and
+*/
+
+
+/************************************************************ C++ ************************************************/
+//Approach-(Simple Observation of AND property)
+//T.C : O(n)
+//S.C : O(1)
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int maxi=0;
+        int result=0;
+        int len=0;
+        for(auto&val:nums){
+           if(maxi==val){
+                len++;
+                result=max(result,len);
+            }
+            else if(val>maxi){
+                maxi=val;
+                result=1;
+                len=1;
+            }
+            else len=0;
+        }
+        return result;
+    }
+};
+//Approach-(Simple Observation of AND property -> One Pass Solution)
+//T.C : O(n)
+//S.C : O(1)
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int maxi=*max_element(nums.begin(),nums.end());
+        int result=0;
+        int len=0;
+        for(auto&val:nums){
+            if(val==maxi){
+                len++;
+            }
+            else{
+                len=0;
+            }
+            result=max(result,len);
+        }
+        return result;
+    }
+};
