@@ -1,0 +1,24 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=ftCheG0m85k
+    Company Tags                : Google(11) , Microsoft(2), Amazon(3) ,Bloomberg(3) ,Adobe ,Yahoo, Zoho , PalantirTechnologies
+    Leetcode Link               : https://leetcode.com/problems/minimum-time-difference/?envType=daily-question&envId=2024-09-16
+*/
+class Solution {
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        vector<int>minutes;
+        for(auto&vec:timePoints){
+            int hr=stoi(vec.substr(0,2));
+            int mini=stoi(vec.substr(3,2));
+            int total_minutes=(hr)*60+(mini);
+            minutes.push_back(total_minutes);
+        }
+        sort(minutes.begin(),minutes.end());
+        int result=INT_MAX;
+        for(int i=1;i<minutes.size();i++){
+            result=min(result,minutes[i]-minutes[i-1]);
+        }
+        result=min(result,(minutes[0]+1440)-minutes[minutes.size()-1]);
+        return result;
+    }
+};
