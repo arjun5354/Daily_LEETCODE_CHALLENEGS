@@ -1,0 +1,47 @@
+/*
+      YOUTUBE VIDEO ON THIS Qn      : Recursion + Memo           - https://www.youtube.com/watch?v=uQuSzPKtoVU
+                                    Recursion + Memo & Bottom Up - 
+      Company Tags                : GOOGLE
+      Leetcode Link               : https://leetcode.com/problems/extra-characters-in-a-string/
+*/
+
+/**************************************************************** C++ ****************************************************************/
+//Approach-1 (Recursion + Memo)
+//T.C : O(n^3)
+//S.C : O(total numberof characters in dictionary words + n for memoization array)
+class Solution {
+public:
+    int t[51];
+    int solve(int i,unordered_set<string>&st,string&s){
+        if(i>=s.size())return 0;
+        if(t[i]!=-1)return t[i];
+        int result=1+solve(i+1,st,s);
+        for(int j=i;j<s.size();j++){
+            string str=s.substr(i,j-i+1);
+            if(st.count(str)){
+                result=min(result,solve(j+1,st,s));
+            }
+        }
+        return t[i]= result;
+    }
+    int tabulation(unordered_set<string>&st,string&s){
+        vector<int>dp(s.size()+1,0);
+        for(int i=s.size()-1;i>=0;i--){
+             int result=1+dp[i+1];
+            for(int j=i;j<s.size();j++){
+                string str=s.substr(i,j-i+1);
+                if(st.count(str)){
+                    result=min(result,dp[j+1]);
+                }
+            }
+            dp[i]= result;
+        }
+        return dp[0];
+    }
+    int minExtraChar(string s, vector<string>& dictionary) {
+        unordered_set<string>st(dictionary.begin(),dictionary.end());
+        memset(t,-1,sizeof(t));
+        // return solve(0,st,s);
+        return tabulation(st,s);
+    }
+};
