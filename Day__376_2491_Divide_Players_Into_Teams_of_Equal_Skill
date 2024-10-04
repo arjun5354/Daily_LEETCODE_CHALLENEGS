@@ -1,0 +1,67 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=DtXt4DTrvOw
+    Company Tags                : IBM Uber
+    Leetcode Link               : https://leetcode.com/problems/divide-players-into-teams-of-equal-skill
+*/
+
+
+/************************************************************ C++ ************************************************/
+//Approach-1 (Using frequency of skills similar to counting sort)
+//T.C : O(nlogn)
+//S.C : O(1)
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        int n = skill.size();
+
+        sort(begin(skill), end(skill));
+
+        int i = 0;
+        int j = n-1;
+        int s = skill[i] + skill[j];
+
+        long long chem = 0;
+
+        while(i < j) {
+            int currSkill = skill[i] + skill[j];
+
+            if(currSkill != s) {
+                return -1;
+            }
+
+            chem += (long long)(skill[i]) * (long long)(skill[j]);
+            i++;
+            j--;
+        }
+        
+
+        return chem;
+
+    }
+};
+//Approach-2
+//T.C : O(n)
+//S.C : O(n)
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        int n=skill.size();
+        long long result=0;
+        long long sumOfArray=0;
+        unordered_map<int,int>mp;
+        for(auto&val:skill){
+            sumOfArray+=val;
+            mp[val]++;
+        }
+        int team=n/2;
+        if(sumOfArray%team!=0)return -1;
+        int target=sumOfArray/team;
+        for(int i=0;i<n;i++){
+            int com=target-skill[i];
+            if(mp[com]<=0)return -1;
+            result+=(long long)skill[i]*(long long)com;
+            mp[com]--;
+        }
+        return result/2;
+    }
+};
