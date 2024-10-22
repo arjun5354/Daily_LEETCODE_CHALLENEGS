@@ -1,0 +1,33 @@
+/*         Scroll down to see JAVA code also                    */
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=LCx1WzlYgvw
+    Company Tags                : Amazon Bloomberg
+    Leetcode Link               : https://leetcode.com/problems/bag-of-tokens/
+*/
+
+
+/********************************************************************* C++ ****************************************************************/
+//T.C : O(nlogn)
+//S.C : O(1)/**
+class Solution {
+public:
+    long long kthLargestLevelSum(TreeNode* root, int k) {
+        queue<TreeNode*>q;
+        priority_queue<long long,vector<long long>,greater<long long>>pq;
+        q.push(root);
+        while(!q.empty()){
+            int size=q.size();
+            long long currLevelSum=0;
+            while(size--){
+                TreeNode* top=q.front();
+                q.pop();
+                currLevelSum+=top->val;
+            if(top->left)q.push(top->left);
+            if(top->right)q.push(top->right);
+            }
+            pq.push(currLevelSum);
+            while(pq.size()>k)pq.pop();
+        }
+        return pq.size()==k?pq.top():-1;
+    }
+};
