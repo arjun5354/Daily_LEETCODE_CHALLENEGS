@@ -1,0 +1,46 @@
+/*     Scroll below to see JAVA code also    */
+/*
+    Company Tags                : Amazon Microsoft
+    Leetcode Link               : https://leetcode.com/problems/cousins-in-binary-tree-ii
+*/
+
+
+/****************************************************** C++ *********************************************/
+//Approach-1 (2 Pass)
+//T.C : O(2*n)
+//S.C : O(n)
+class Solution {
+public:
+    TreeNode* replaceValueInTree(TreeNode* root) {
+        queue<pair<TreeNode*,int>>q;
+        q.push({root,root->val});
+        while(!q.empty()){
+            int size=q.size();
+            int levelSum=0;
+            int i=0;
+            while(i<size){
+                TreeNode*node=q.front().first;
+                int nodeVal=q.front().second;
+                q.pop();
+                levelSum+=node->val;
+                q.push({node,nodeVal});
+                i++;
+            }
+            i=0;
+            while(i<size){
+                TreeNode*node=q.front().first;
+                int nodeVal=q.front().second;
+                q.pop();
+                node->val=levelSum-nodeVal;
+                
+                int childSum=0;
+                if(node->left)childSum+=node->left->val;
+                if(node->right)childSum+=node->right->val;
+                if(node->left)q.push({node->left,childSum});
+                if(node->right)q.push({node->right,childSum});
+                i++;
+            }
+        }
+        return root;
+    }
+};
