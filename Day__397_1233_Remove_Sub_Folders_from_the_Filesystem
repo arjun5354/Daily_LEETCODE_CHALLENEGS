@@ -1,0 +1,65 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=KNXbtg9rtLQ
+    Company Tags                : will update soon
+    Leetcode Link               : https://leetcode.com/problems/remove-sub-folders-from-the-filesystem
+*/
+//Approach-1 (Using set)
+//T.C : O(nlogn*L^2)
+//S.C : O(n) 
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        vector<string>result;
+        unordered_set<string>st;
+        sort(folder.begin(),folder.end());
+        for(auto&floderr:folder){
+            string curr;
+            bool flag=false;
+            for(int i=0;i<floderr.size();i++){
+                    while(i<floderr.size()&&floderr[i]!='/'){
+                    curr+=floderr[i];
+                    i++;
+                    }
+                    curr+='/';
+                    if(st.count(curr)){
+                        flag=true;
+                        break;
+                    }
+            }
+            if(!flag){
+            result.push_back(floderr);
+            st.insert(curr);
+            }
+        }
+        return result;
+    }
+};
+
+//Approach-2 (Using Sorting)
+//T.C : O(n*logn) //You can consider the length of each character as well - O(n*L*logn)
+//S.C : O(1)
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        sort(begin(folder), end(folder));
+        vector<string> result;
+
+        result.push_back(folder[0]); //sorted hai islie folder[0] ka koi parent nahi hoga
+        //so it can never be a sub-folder
+
+        for(int i = 1; i < folder.size(); i++) {
+
+            string currFolder = folder[i];
+            string lastFolder = result.back();
+            lastFolder += '/';
+
+            if(currFolder.find(lastFolder) != 0) {
+                result.push_back(currFolder);
+            }
+        }
+
+        return result;
+
+    }
+};
+
