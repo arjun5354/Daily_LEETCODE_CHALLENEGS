@@ -1,0 +1,45 @@
+/*
+    Company Tags                : May Be Google 
+    Leetcode Link               : https://leetcode.com/problems/height-of-binary-tree-after-subtree-removal-queries
+*/
+
+class Solution {
+public:
+    unordered_map<int,int> left_Height;
+    unordered_map<int,int> right_Height;
+    unordered_map<int,int> result;
+    int findHeight(TreeNode* root)
+    {
+        if(root==NULL)
+        return 0;
+
+        int left= findHeight(root->left);
+        int right= findHeight(root->right);
+
+        left_Height[root->val]= left;
+        right_Height[root->val]= right;
+
+        return 1+ max(left, right);
+
+    }
+    void newHeight(TreeNode* root, int maxi, int level)
+    {
+        if(root==NULL) return;
+        result[root->val]= maxi;
+        newHeight(root->left, max(maxi, level + right_Height[root->val]), level+1);
+        newHeight(root->right, max(maxi, level + left_Height[root->val]), level+1);
+    }
+    vector<int> treeQueries(TreeNode* root, vector<int>& queries) {
+        int m= queries.size();
+        vector<int> ans(m, 0);
+        if(root==NULL) return ans;
+        findHeight(root);
+        newHeight(root, 0, 0);
+
+        for(int i=0; i<m; i++)
+        {
+            ans[i]=result[queries[i]];
+        }
+        return ans;
+    }
+};
