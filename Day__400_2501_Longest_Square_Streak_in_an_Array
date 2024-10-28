@@ -1,0 +1,59 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=Xpj6GQgP7og
+    Company Tags                : Will update soon
+    Leetcode Link               : https://leetcode.com/problems/longest-square-streak-in-an-array
+*/
+
+//Approach-1 (Using sorting and binary search)
+//T.C : O(nlogn)
+//S.C : O(1)
+class Solution {
+public:
+    int longestSquareStreak(vector<int>& n) {
+        sort(n.begin(),n.end());
+        int result=0;
+        for(int i=0; i<n.size();++i){
+            long long count=1,sqr=n[i];
+            while(binary_search(n.begin(),n.end(),sqr*sqr*1LL)){
+                ++count;
+                sqr=sqr*sqr;
+            }
+            if(count>1)result=max(count,result*1LL);
+            
+        }
+        if(result==0)result=-1;
+        return result;
+    }
+};
+
+
+//Approach-2 (Using set)
+//T.C : O(n) ///Note : O(n) because while loop will run max 5 times. So if constraint is given, then saying O(n) time complexity is fine.
+//S.C : O(n)
+class Solution {
+public:
+    int longestSquareStreak(vector<int>& nums) {
+        unordered_set<int> st(begin(nums), end(nums));
+
+        int maxStreak = 0;
+
+        for(int &num : nums) {
+            int streak = 0;
+            long long curr = num;
+
+            while(st.find(curr) != st.end()) {
+                streak++;
+
+                if(curr*curr > 1e5) {
+                    break;
+                }
+
+                curr = curr*curr; //square
+            }
+
+            maxStreak = max(maxStreak, streak);
+        }
+
+        return maxStreak < 2 ? -1 : maxStreak;
+    }
+};
