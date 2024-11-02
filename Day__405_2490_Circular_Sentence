@@ -1,0 +1,39 @@
+/*
+    Company Tags                : will update Soon 
+    Leetcode Link               : https://leetcode.com/problems/circular-sentence/description/?envType=daily-question&envId=2024-11-02
+*/
+
+/***************************************************************** C++ ***************************************************************************/
+//Approach-1 (Using Stringstream tokeniser)
+//T.C : O(n)
+//S.C : O(n)
+class Solution {
+public:
+    bool isCircularSentence(string sentence) {
+        vector<string>temp;
+        stringstream ss(sentence);
+        string token;
+        while(ss>>token)temp.push_back(token);
+        int n=temp.size();
+        if(temp[0][0]!=temp[n-1][temp[n-1].size()-1])return false;
+        for(int i=0;i<n-1;i++){
+            if(temp[i][temp[i].size()-1]!=temp[i+1][0]) return false;
+        }
+        return true;
+    }
+};
+
+//Approach-2 (simple simulation)
+//T.C : O(n)
+//S.C : O(1)
+class Solution {
+public:
+    bool isCircularSentence(string sentence) {
+        int n=sentence.size();
+        if(sentence[0]!=sentence[n-1])return false;
+        for(int i=1;i<n-1;i++){
+            if(sentence[i]==' '&&sentence[i-1]!=sentence[i+1])return false;
+        }
+        return true;
+    }
+};
