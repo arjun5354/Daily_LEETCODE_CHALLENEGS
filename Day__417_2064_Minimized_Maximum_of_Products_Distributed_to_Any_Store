@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minimizedMaximum(int n, vector<int>& nums) {
+        int s=1,e=*max_element(nums.begin(),nums.end());
+        int result=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            int count=0;
+            for(int i=0;i<nums.size();i++){
+                count+=nums[i]/mid;
+                if(nums[i]%mid)count++;
+            }
+            if(count>n){
+                s=mid+1;
+            }else{
+                result=mid;
+                e=mid-1;
+            }
+        }
+        return result;
+    }
+};
