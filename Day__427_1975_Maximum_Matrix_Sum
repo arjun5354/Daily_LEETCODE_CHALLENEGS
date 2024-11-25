@@ -1,0 +1,31 @@
+/*     Scroll below to see JAVA code also   */
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=ca9ND5_EQxk
+    Company Tags                : will update soon
+    Leetcode Link               : https://leetcode.com/problems/maximum-matrix-sum
+*/
+
+
+/******************************************** C++ ********************************************/
+//Approach - Check Odd or Even count of -ves
+//T.C : O(row*col)
+//S.C : O(1)
+
+class Solution {
+public:
+    long long maxMatrixSum(vector<vector<int>>& matrix) {
+        int n=matrix.size();
+        int minusCount=0;
+        int minEle=INT_MAX;
+        long long result=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(matrix[i][j]<=0) minusCount++;
+                minEle=min(minEle,abs(matrix[i][j]));
+                result+=abs(matrix[i][j]);
+            }
+        }
+        if(minusCount&1) result-=2*minEle;
+        return result;
+    }
+};
