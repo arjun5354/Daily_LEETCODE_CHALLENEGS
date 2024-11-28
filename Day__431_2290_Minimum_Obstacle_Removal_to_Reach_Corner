@@ -1,0 +1,39 @@
+/*     Scroll below to see JAVA code also    */
+/*
+    Company Tags                : Google
+    Leetcode Link               : https://leetcode.com/problems/minimum-obstacle-removal-to-reach-corner
+*/
+
+
+/************************************************************ C++ ************************************************/
+//Approach (BFS)
+//T.C : O(m*n log(m*n))
+//S.C : O(m*n)
+class Solution {
+public:
+    int minimumObstacles(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<int>>dist(n,vector<int>(m,INT_MAX));
+        dist[0][0]=0;
+        vector<vector<int>>dir={{-1,0},{0,1},{1,0},{0,-1}};
+        deque<pair<int,int>>q;
+        q.push_front({0,0});
+        while(!q.empty()){
+            auto[x,y]=q.front();
+            q.pop_front();
+            for(auto&direc:dir){
+                int newx=direc[0]+x;
+                int newy=direc[1]+y;
+                if(newx>=0&&newx<n&&newy>=0&&newy<m){
+                    if(dist[newx][newy]> grid[newx][newy]+dist[x][y]){
+                        dist[newx][newy]=grid[newx][newy]+dist[x][y];
+                        if(grid[newx][newy]==0)q.push_front({newx,newy});
+                        else q.push_back({newx,newy});
+                    }
+                }
+            }
+        }
+        return dist[n-1][m-1];
+    }
+};
