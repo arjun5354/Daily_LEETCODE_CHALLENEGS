@@ -1,0 +1,29 @@
+/*     Scroll below to see JAVA code also    */
+/*
+    Company Tags                : Yelp
+    Leetcode Link               : https://leetcode.com/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence/description/
+*/
+
+
+/************************************************************ C++ ************************************************/
+//Approach-1 (simple simulations)
+//T.C : O(m+n)
+//S.C : O(1)
+class Solution {
+public:
+    int isPrefixOfWord(string s, string p) {
+       int i=0,j=0;
+       int cnt=1;
+       while(i<s.size()){
+         while(j<p.size()&&s[i]!=' '&&s[i+j]==p[j]){
+            j++;
+         }
+         if(j==p.size()) return cnt;
+         else j=0;
+         while(i<s.size()&&s[i]!=' ')i++;
+         i++;
+         cnt++;
+       }
+       return -1;
+    }
+};
