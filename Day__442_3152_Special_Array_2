@@ -1,0 +1,71 @@
+/*         Scroll below to see JAVA code also        */
+/*
+   YOUTUBE VIDEO ON THIS Qn     : https://www.youtube.com/watch?v=powGdCI0afg
+    Company Tags                :  Amazon Google
+    Leetcode Link               : https://leetcode.com/problems/special-array-ii
+*/
+
+
+/**************************************************** C++ ****************************************************/
+//Approach-1 (Using cumulative sum)
+//T.C : O(n + m)
+//S.C : O(n)
+class Solution {
+public:
+    vector<bool> isArraySpecial(vector<int>& nums, vector<vector<int>>& queries) {
+        int n=nums.size();
+        vector<int>badidxcnt(n,0);
+        for(int i=1;i<nums.size();i++){
+             badidxcnt[i]=badidxcnt[i-1];
+            if(nums[i]%2==nums[i-1]%2){
+                badidxcnt[i]++;
+            }
+        }
+        vector<bool>result;
+        for(auto&que:queries){
+            int i=que[0];
+            int j=que[1];
+            result.push_back((badidxcnt[j]-badidxcnt[i])==0?true:false);
+        }
+        return result;
+    }
+};
+
+
+/**************************************************** JAVA ****************************************************/
+//Approach-1 (Using cumulative sum)
+//T.C : O(n + m)
+//S.C : O(n)
+class Solution {
+    public boolean[] isArraySpecial(int[] nums, int[][] queries) {
+        int n = nums.length;
+        int m = queries.length;
+
+        int[] cumSum = new int[n];
+        // cumSum[i] = total count of violating indices till index i
+        cumSum[0] = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (nums[i] % 2 == nums[i - 1] % 2) { // violating index
+                cumSum[i] = cumSum[i - 1] + 1;
+            } else {
+                cumSum[i] = cumSum[i - 1];
+            }
+        }
+
+        boolean[] result = new boolean[m];
+        for (int i = 0; i < m; i++) {
+            int start = queries[i][0];
+            int end = queries[i][1];
+
+            if (cumSum[end] - cumSum[start] == 0) {
+                result[i] = true;
+            } else {
+                result[i] = false;
+            }
+        }
+
+        return result;
+    }
+}
+
