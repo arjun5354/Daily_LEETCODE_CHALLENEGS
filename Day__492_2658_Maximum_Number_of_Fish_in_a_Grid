@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int n,m;
+    vector<vector<int>>directions={{0,1},{0,-1},{1,0},{-1,0}};
+    void dfs(int i,int j,vector<vector<int>>& grid,int&currCount){
+        // cout<<currCount<<"";
+        currCount+=grid[i][j];
+        grid[i][j]=0;
+        for(auto&dir:directions){
+            int new_i=i+dir[0];
+            int new_j=j+dir[1];
+            if(new_i>=0&&new_i<n&&new_j>=0&&new_j<m&&grid[new_i][new_j]){
+                dfs(new_i,new_j,grid,currCount);
+            }
+        }
+    }
+    void bfs(int i,int j,vector<vector<int>>& grid,int&currCount){
+        queue<pair<int,int>>q;
+        q.push({i,j});
+        while(!q.empty()){
+            int x=q.front().first;
+            int y=q.front().second;
+            q.pop();
+            currCount+=grid[x][y];
+            grid[x][y]=0;
+            for(auto&dir:directions){
+                int new_i=x+dir[0];
+                int new_j=y+dir[1];
+                if(new_i>=0&&new_i<n&&new_j>=0&&new_j<m&&grid[new_i][new_j]){
+                    q.push({new_i,new_j});
+                }
+            }
+        }
+    }
+    int findMaxFish(vector<vector<int>>& grid) {
+        int result=0;
+        n=grid.size();
+        m=grid[0].size();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]){
+                    int ans=0;
+                    dfs(i,j,grid,ans);
+                    // cout<<ans<<"";
+                    result=max(result,ans);
+                }
+            }
+        }
+        return result;
+    }
+};
