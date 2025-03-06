@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> findMissingAndRepeatedValues(vector<vector<int >>& grid) {
+      vector<long >nums;
+      for(auto&v:grid){
+        for(auto&ele:v)nums.push_back(ele);
+      } 
+      long  n=nums.size();
+      long  sumUpToN=(n*(n+1))/2;
+      long  squareSum=(n*(n+1)*(2*n+1))/6;
+      long  eleSum=0;
+      long  squareEleSum=0;
+      for(auto&num:nums){
+        eleSum+=num;
+        squareEleSum+=(num*num);
+      }
+      long  val1=sumUpToN-eleSum; 
+      long  val2=squareSum-squareEleSum;
+      val2/=val1;
+      // x=miss,y=rep
+      long  x=(val1+val2)/2;
+      long  y=val2-x;
+      return {(int)y,(int)x};
+    }
+};
