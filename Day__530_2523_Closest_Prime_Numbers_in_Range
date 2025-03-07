@@ -1,0 +1,45 @@
+/*     Scroll below to see JAVA code    */
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=fwKTSOUvzaE
+    Company Tags                : will soon update
+    Leetcode Link               : https://leetcode.com/problems/closest-prime-numbers-in-range
+*/
+
+//****************************************************** C++ ************************************************************************//
+
+//Approach-1 (Using Sieve Of Eratosthenes)
+class Solution {
+public:
+    void preComputingPrimes(vector<bool>&nums,int right){
+        nums[1]=false;
+        for(int i=2;i*i<=right;i++){
+            if(nums[i]){
+                for(int p=i*i;p<=right;p+=i)
+                nums[p]=false;
+            }
+        }
+    }
+
+    vector<int> closestPrimes(int left, int right) {
+        vector<bool>visited(right+1,true);
+        preComputingPrimes(visited,right);
+        int num1=-1,num2=-1;
+        vector<int>res(2,-1);
+        int diff=INT_MAX;
+        for(int i=left;i<=right;i++){
+            if(num1==-1 && visited[i])num1=i;
+            else if(num2==-1 && visited[i])num2=i;
+            if(num2!=-1) {
+                if(diff>(num2-num1)){
+                res[0]=num1;
+                res[1]=num2;
+                diff=num2-num1;
+                }
+                num1=num2;
+                num2=-1;
+            } 
+        }
+        if (res[0]==-1 || res[1]==-1) return {-1,-1};
+        return res;
+    }
+};
