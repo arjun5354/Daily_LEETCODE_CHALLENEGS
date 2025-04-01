@@ -1,0 +1,39 @@
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=NcC8lo7nLCE
+    Company Tags                : GOOGLE
+    Leetcode Link               : https://leetcode.com/problems/solving-questions-with-brainpower/
+*/
+
+class Solution {
+public:
+    using ll=long long;
+    ll solve(int i,vector<vector<int>>& nums){
+        if(i>=nums.size())return 0;
+        ll inc=nums[i][0]+solve(i+nums[i][1]+1,nums);
+        ll exc=solve(i+1,nums);
+        return max(inc,exc);
+    }
+    ll solveMem(int i,vector<vector<int>>& nums,vector<ll>&dp){
+        if(i>=nums.size())return 0;
+        if(dp[i]!=-1)return dp[i];
+        ll inc=nums[i][0]+solveMem(i+nums[i][1]+1,nums,dp);
+        ll exc=solveMem(i+1,nums,dp);
+        return dp[i]=max(inc,exc);
+    }
+    ll solveTab(vector<vector<int>>& nums){
+        vector<ll>dp(nums.size()+1,0);
+        for(int i=nums.size()-1;i>=0;i--){
+            ll inc=nums[i][0];
+            if(i+nums[i][1]+1<nums.size())inc+=dp[i+nums[i][1]+1];
+            ll exc=dp[i+1];
+            dp[i]=max(inc,exc);
+        }
+        return dp[0];
+    }
+    long long mostPoints(vector<vector<int>>& questions) {
+        // return solve(0,questions);
+        vector<ll>dp(questions.size()+1,-1);
+        // return solveMem(0,questions,dp);
+        return solveTab(questions);
+    }
+};
