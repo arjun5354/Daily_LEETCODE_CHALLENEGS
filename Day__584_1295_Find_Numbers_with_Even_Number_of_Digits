@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int findNumbers(vector<int>& nums) {
+        int cnt=0;
+        for(auto&n:nums){
+            string s=to_string(n);
+            if(!(s.size()&1))cnt++;
+        }
+        return cnt;
+    }
+};
