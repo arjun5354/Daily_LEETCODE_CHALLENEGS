@@ -1,0 +1,27 @@
+/*     Scroll below to see JAVA code also    */
+/*
+    YOUTUBE VIDEO ON THIS Qn    : https://www.youtube.com/watch?v=JlpjAjsA03o
+    Company Tags                : will update soon
+    Leetcode Link               : https://leetcode.com/problems/find-the-k-th-character-in-string-game-ii/description/
+*/
+
+
+/************************************************************ C++ ************************************************/
+//Approach - bruteforce
+//T.C : O(k^2)
+//S.C : O(k^2)
+class Solution {
+public:
+    char kthCharacter(int k) {
+        string word="a";
+        while(word.size()<k){
+            string temp;
+            for(auto&ch:word){
+                if(ch=='z')temp+='a';
+                else temp+=(ch+1);
+            }
+            word+=temp;
+        }
+    return word[k-1];
+    }
+};
