@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> getNoZeroIntegers(int n) {
+        if(n<=10)return {1,n-1};
+        for(int i=1;i<=n/2;i++){
+            string a=to_string(i);
+            string b=to_string(n-i);
+            bool flag1=false;
+            bool flag2=false;
+            for(auto&ch:a){
+                if(ch=='0'){
+                    flag1=true;
+                    break;
+                }
+            }
+            for(auto&ch:b){
+                if(ch=='0'){
+                    flag2=true;
+                    break;
+                }
+            }
+            if(!flag1&&!flag2) return {i,n-i};
+        }
+        return {1,1};
+    }
+};
