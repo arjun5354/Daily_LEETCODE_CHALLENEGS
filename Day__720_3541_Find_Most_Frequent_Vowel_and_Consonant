@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int maxFreqSum(string s) {
+        vector<int>freq(26,0);
+        int v=0,c=0;
+        string vowel="aeiou";
+        for(auto&ch:s){
+            if(vowel.find(ch)!=string::npos){
+                freq[ch-'a']++;
+                v=max(v,freq[ch-'a']);
+            }else{
+                freq[ch-'a']++;
+                c=max(c,freq[ch-'a']);
+            }
+        }
+        return c+v;
+    }
+};
