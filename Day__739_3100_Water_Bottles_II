@@ -1,0 +1,29 @@
+/*    Scroll below to see JAVA code also    */
+/*
+    YOUTUBE VIDEO ON THIS Qn     : https://www.youtube.com/watch?v=v2D_v3llC98
+    Company Tags                 : AMAZON
+    Leetcode Link                : https://leetcode.com/problems/water-bottles
+*/
+
+
+/********************************************************************* C++ *********************************************************************/
+//Approach-1 (Simple simulation)
+//T.C : O(numBottles)
+//S.C : O(1)
+class Solution {
+public:
+    int maxBottlesDrunk(int numBottles, int numExchange) {
+        int result=numBottles;
+        while(numBottles>=numExchange){
+                int Empty=0;
+                while(numBottles>=numExchange){
+                    numBottles-=numExchange;
+                    Empty++;
+                    numExchange++;
+                }
+                result+=Empty;
+                numBottles+=Empty;
+        }
+        return result;
+    }
+};
