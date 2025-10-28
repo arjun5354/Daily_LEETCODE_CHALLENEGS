@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int countValidSelections(vector<int>& nums) {
+        int totalSum=accumulate(nums.begin(),nums.end(),0);
+        int csum=0,result=0;
+        for(auto&v:nums){
+            csum+=v;
+            if(!v){
+                int target=totalSum-csum;
+                if(csum==target)result+=2;
+                else if((csum-1==target)||(csum==target-1))result++;
+            }
+        }
+        return result;
+    }
+};
