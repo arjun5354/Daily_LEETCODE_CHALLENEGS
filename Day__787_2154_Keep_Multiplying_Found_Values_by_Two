@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int findFinalValue(vector<int>& nums, int original) {
+        unordered_map<int,int>mp;
+        for(auto&val:nums)mp[val]++;
+        while(mp.count(original)){
+            original=2*original;
+        }
+        return original;
+    }
+};
