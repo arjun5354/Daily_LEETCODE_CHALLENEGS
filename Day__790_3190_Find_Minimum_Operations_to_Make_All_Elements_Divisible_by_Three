@@ -1,0 +1,8 @@
+class Solution {
+public:
+    int minimumOperations(vector<int>& nums) {
+        int cnt=0;
+        for(auto&v:nums)if(v%3)cnt++;
+        return cnt;
+    }
+};
