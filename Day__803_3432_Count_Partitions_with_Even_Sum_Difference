@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int countPartitions(vector<int>& nums) {
+        int n=nums.size();
+        int sum=accumulate(nums.begin(),nums.end(),0);
+        int csum=0,result=0;
+        for(int i=0;i<n-1;i++){
+            csum+=nums[i];
+            if(!(((csum-sum)-csum)&1))result++;
+        }
+        return result;
+    }
+};
