@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int M=1e9+7;
+    int specialTriplets(vector<int>& nums) {
+        unordered_map<long long,long long>left;
+        unordered_map<long long,long long>right;
+        long long result=0;
+        for(auto&v:nums)right[v]++;
+        for(int i=0;i<nums.size();i++){
+            long long v=nums[i];
+            right[v]--;
+            long long tar=v*2;
+            if(left[tar]&&right[tar])result=(result+left[tar]*right[tar])%M;
+            left[v]++;
+        }
+        return result;
+    }
+};
+// [0,1,0,0]
+
+// right            left
+// 0 -> 3->2->1      0 -> 1
+// 1 -> 1
+
+// result=0+0+1+0==1 
