@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<string> validateCoupons(vector<string>& code, vector<string>& businessLine, vector<bool>& isActive) {
+        int n=code.size();
+        unordered_set<string>st={"electronics","grocery","pharmacy","restaurant"};
+        vector<int>inDex;
+        for(int i=0;i<n;i++){
+            bool isAllCorrect=true;
+            if(!code[i].size())continue;
+            for(auto&ch:code[i]){
+                if(!isalnum(ch)&&ch!='_'){
+                    isAllCorrect=false;
+                    break;
+                }
+            }
+            if(isAllCorrect&&isActive[i]&&st.count(businessLine[i]))inDex.push_back(i);
+        }
+        // for(auto&i:inDex)cout<<i<<" ";
+        auto comp=[&](auto&i1,auto&i2){
+            if(businessLine[i1]==businessLine[i2]) return code[i1]<code[i2];
+            return businessLine[i1]<businessLine[i2];
+        };
+        sort(inDex.begin(),inDex.end(),comp);
+        vector<string>result;
+        for(auto&i:inDex)result.push_back(code[i]);
+        return result;
+    }
+};
