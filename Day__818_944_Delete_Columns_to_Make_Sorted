@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minDeletionSize(vector<string>& strs) {
+        int n=strs[0].size(),count=0;
+        for(int i=0;i<n;i++){
+            char prev='A';
+            for(auto&str:strs){
+                if(prev=='A') prev=str[i];
+                else if(str[i]>=prev){
+                    prev=str[i];
+                }else{
+                    count++;
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+};
