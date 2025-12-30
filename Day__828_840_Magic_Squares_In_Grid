@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool checkMagicSquare(vector<vector<int>>& grid,int row,int col){
+        unordered_set<int>st;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                if(st.count(grid[row+i][col+j]) or grid[row+i][col+j]>9 or grid[row+i][col+j]<1)return false;
+                st.insert(grid[row+i][col+j]);
+            }
+        }
+        int r1Sum=grid[row][col]+grid[row][col+1]+grid[row][col+2];
+        int r2Sum=grid[row+1][col]+grid[row+1][col+1]+grid[row+1][col+2];
+        int r3Sum=grid[row+2][col]+grid[row+2][col+1]+grid[row+2][col+2];
+
+        int c1Sum=grid[row][col]+grid[row+1][col]+grid[row+2][col];
+        int c2Sum=grid[row][col+1]+grid[row+1][col+1]+grid[row+2][col+1];
+        int c3Sum=grid[row][col+2]+grid[row+1][col+2]+grid[row+2][col+2];
+
+
+        int leftDiagonal=grid[row][col]+grid[row+1][col+1]+grid[row+2][col+2];
+        int rightDiagonal=grid[row][col+2]+grid[row+1][col+1]+grid[row+2][col];
+
+
+        return r1Sum==r2Sum&&r2Sum==r3Sum&&leftDiagonal==rightDiagonal&&c1Sum==c2Sum&&c2Sum==c3Sum&&c3Sum==leftDiagonal&&leftDiagonal==r1Sum;
+    }
+    int numMagicSquaresInside(vector<vector<int>>& grid) {
+        int m=grid.size();
+        int n=grid[0].size();
+        int result=0;
+        for(int i=0;i<m-2;i++){
+            for(int j=0;j<n-2;j++){
+                result+=checkMagicSquare(grid,i,j);
+            }
+        }
+        return result;
+    }
+};
