@@ -1,0 +1,68 @@
+class Solution {
+public:
+    int solveUsingRe(string&s1,string&s2,int i,int j){
+        if(i>=s1.length() && j>=s2.length()) return 0;
+        
+        if(i>=s1.length()) return s2[j]+solveUsingRe(s1,s2,i,j+1);
+        if(j>=s2.length()) return s1[i]+solveUsingRe(s1,s2,i+1,j);
+
+        if(s1[i]==s2[j]) return solveUsingRe(s1,s2,i+1,j+1);
+
+        // not matching condition
+        int delete_i_from_s1=s1[i]+solveUsingRe(s1,s2,i+1,j);
+        int delete_j_from_s2=s2[j]+solveUsingRe(s1,s2,i,j+1);
+
+
+        return min(delete_i_from_s1,delete_j_from_s2);
+
+    }
+    int solveUsingMem(string&s1,string&s2,int i,int j,vector<vector<int>>&dp){
+        if(i>=s1.length() && j>=s2.length()) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(i>=s1.length()) return dp[i][j]= s2[j]+solveUsingMem(s1,s2,i,j+1,dp);
+        if(j>=s2.length()) return  dp[i][j]= s1[i]+solveUsingMem(s1,s2,i+1,j,dp);
+
+        if(s1[i]==s2[j]) return dp[i][j]= solveUsingMem(s1,s2,i+1,j+1,dp);
+
+        // not matching condition
+        int delete_i_from_s1=s1[i]+solveUsingMem(s1,s2,i+1,j,dp);
+        int delete_j_from_s2=s2[j]+solveUsingMem(s1,s2,i,j+1,dp);
+
+
+        dp[i][j]= min(delete_i_from_s1,delete_j_from_s2);
+
+        return dp[i][j];
+
+    }
+    int tabulation(string&s1,string&s2){
+       vector<vector<int>>dp(s1.size()+1,vector<int>(s2.size()+1,0));
+       for(int i=s1.size()-1;i>=0;i--){
+           dp[i][s2.size()]=s1[i]+dp[i+1][s2.size()];
+       }
+       for(int i=s2.size()-1;i>=0;i--){
+           dp[s1.size()][i]=s2[i]+dp[s1.size()][i+1];
+       }
+
+
+       for(int i=s1.size()-1;i>=0;i--){
+           for(int j=s2.size()-1;j>=0;j--){
+        if(s1[i]==s2[j]) dp[i][j]= dp[i+1][j+1];
+        else{
+        // not matching condition
+        int cost1=s1[i]+dp[i+1][j];
+        int cost2=s2[j]+dp[i][j+1];
+        dp[i][j]= min(cost1,cost2);
+
+        }
+           }
+       }
+        return dp[0][0];
+    }
+    int minimumDeleteSum(string s1, string s2) {
+        // return solveUsingRe(s1,s2,0,0);
+        vector<vector<int>>dp(s1.size()+1,vector<int>(s2.size()+1,-1));
+        // return solveUsingMem(s1,s2,0,0,dp);
+
+        return tabulation(s1,s2);
+    }
+};
