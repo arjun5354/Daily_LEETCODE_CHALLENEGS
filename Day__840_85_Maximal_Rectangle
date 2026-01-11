@@ -1,0 +1,56 @@
+class Solution {
+public:
+ vector<int> nextSmallIdx(vector<int>& heights){
+        int n=heights.size();
+        stack<int>st;
+        vector<int>nextSmall(n,n);
+        st.push(n-1);
+        for(int i=n-2;i>=0;i--){
+            while(!st.empty()&&heights[st.top()]>=heights[i])st.pop();
+            if(!st.empty())nextSmall[i]=st.top();
+            st.push(i);
+        }
+        return nextSmall;
+    }
+    vector<int>prevSmallIdx(vector<int>& heights){
+        int n=heights.size();
+        stack<int>st;
+        vector<int>prevSmall(n,-1);
+        st.push(0);
+        for(int i=1;i<n;i++){
+            while(!st.empty()&&heights[st.top()]>=heights[i])st.pop();
+            if(!st.empty())prevSmall[i]=st.top();
+            st.push(i);
+        }
+        return prevSmall;
+    }
+    int largestRectangleArea(vector<int>& heights) {
+        vector<int>nxtsmlIdx=nextSmallIdx(heights);
+        vector<int>prvsmlIdx=prevSmallIdx(heights);
+        int result=0;
+        for(int i=0;i<heights.size();i++){
+            result=max(result,heights[i]*(nxtsmlIdx[i]-prvsmlIdx[i]-1));
+        }
+        return result;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        vector<vector<int>>rec;
+        int m=matrix.size();
+        int n=matrix[0].size();
+        for(int i=0;i<m;i++){
+            vector<int>row;
+            for(int j=0;j<n;j++){
+                row.push_back(matrix[i][j]-'0');
+            }
+            rec.push_back(row);
+        }
+        int area=largestRectangleArea(rec[0]);
+        for(int i=1;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(rec[i][j])rec[i][j]+=rec[i-1][j];
+            }
+            area=max(area,largestRectangleArea(rec[i]));
+        }
+        return area;
+    }
+};
