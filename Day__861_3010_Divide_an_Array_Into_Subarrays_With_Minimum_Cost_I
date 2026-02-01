@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int minimumCost(vector<int>& nums) {
+        int maxv=INT_MAX,smaxv=INT_MAX;
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]<=maxv){
+                smaxv=maxv;
+                maxv=nums[i];
+            }else if(nums[i]<smaxv){
+                smaxv=nums[i];
+            }
+        }
+        return nums[0]+maxv+smaxv;
+    }
+};
