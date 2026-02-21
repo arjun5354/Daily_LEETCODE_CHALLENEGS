@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool isPrime(int num){
+        if(num<=1)return false;
+        for(int i=2;i<=sqrt(num);i++){
+            if(num%i==0) return false;
+        }
+        return true;
+    }
+    int countPrimeSetBits(int left, int right) {
+        int result=0;
+        for(int i=left;i<=right;i++){
+            int bitCnt=__builtin_popcount(i);
+            if(isPrime(bitCnt))result++;
+        }
+        return result;
+    }
+};
