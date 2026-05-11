@@ -1,0 +1,13 @@
+class Solution {
+public:
+    vector<int> separateDigits(vector<int>& nums) {
+        vector<int>result;
+        for(auto&val:nums){
+          string s=to_string(val);
+          for(auto&ch:s){
+            result.push_back(ch-'0');
+          }
+        }
+        return result;
+    }
+};
