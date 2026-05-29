@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minElement(vector<int>& nums) {
+        int result=INT_MAX;
+        for(auto&val:nums){
+            // string s=to_string(val);
+            int sum=0;
+            // for(auto&ch:s){
+            //     sum+=ch-'0';
+            // }
+            while(val){
+                sum+=val%10;
+                val/=10;
+            }
+            result=min(result,sum);
+        }
+        return result;
+    }
+};
