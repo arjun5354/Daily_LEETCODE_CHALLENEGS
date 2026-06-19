@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int largestAltitude(vector<int>& gain) {
+        int result=0,csum=0;
+        for(auto&ch:gain){
+            csum+=ch;
+            result=max(result,csum);
+        }
+        return result;
+    }
+};
